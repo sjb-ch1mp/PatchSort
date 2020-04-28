@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>PatchSort v1</title>
+</head>
+<style>
+    body{
+        background-color:#000000;
+    }
+    textarea{
+        width:100%;
+        font-family: "Courier New";
+        font-size: small;
+    }
+    label{
+        color:#ffffff;
+        font-size: x-large;
+        font-family: Candara;
+    }
+    button{
+        background-color: #f6023f;
+        color: black;
+        font-family: Candara;
+        font-size: x-large;
+        font-weight: bold;
+        border-color: #f6023f;
+    }
+    p.help{
+        color: white;
+        font-family: Candara;
+        font-size: medium;
+        padding: 10px;
+    }
+</style>
+
+<body>
+<img src="patchsort.png" width="100%">
+<p class="help">
+    To use PatchSort, do blah...
+</p>
+<p>
+    <label for="security_updates">> SECURITY UPDATES</label>
+    <textarea id="security_updates" rows="25"></textarea>
+</p>
+<p>
+    <label for="known_issues">> KNOWN ISSUES</label>
+    <textarea id="known_issues" rows="25"></textarea>
+</p>
+<p align="center">
+    <button onclick="patchsort()">> SORT</button>
+</p>
+</body>
+
+<script>
+    function patchsort(){
+
+        var security_updates = import_security_updates();
+        if(security_updates == null){
+            alert("You need to paste the contents of the security update in the 'Security Updates' field!");
+            return;
+        }
+        var known_issues = import_known_issues();
+        if(known_issues == null){
+            alert("You need to paste the table of known issues in the 'Known Issues' field!");
+        }
+
+
+
+    }
+
+    function import_security_updates(){
+        var raw = document.getElementById("security_updates").value;
+        var lines = raw.split('\n');
+        var security_updates = null;
+        var headings = false;
+        if(lines[0].indexOf("Date,Product") != -1){
+            //user has copied headings
+            security_updates = [lines.length - 1];
+            headings = true;
+        }else{
+            //user has only copied the content
+            security_updates = [lines.length];
+        }
+        for(var i=0; i<lines.length; i++){
+
+            //skip the heading line
+            if(headings){
+                continue;
+            }
+
+            //check for nested commas
+            if(lines[i].indexOf("\"") != -1){
+                //FIXME console.log("Before strip: " + lines[i]);
+                lines[i] = strip_commas(lines[i]);
+                //FIXME console.log("After strip: " + lines[i]);
+            }
+        }
+    }
+
+    function import_known_issues(){
+        var raw = document.getElementById("known_issues").value;
+
+    }
+
+    function strip_commas(line){
+        var index_first_quote = line.indexOf(",\"");
+        var index_last_quote = line.indexOf("\",");
+        return line.substring(0, index_first_quote + 1) + line.substring(index_first_quote + 2, index_last_quote).replace(",", "") + line.substring(index_last_quote + 1);
+    }
+
+    class patch{
+        constructor(date, product, product_family, platform, article, download, details){
+            this.date = date;
+            this.product = product;
+            this.product_family = product_family;
+            this.platform = platform;
+            this.article = article;
+            this.download = download;
+            this.details = details;
+        }
+    }
+
+    class known_issue{
+        constructor(kb, product){
+            this.kb = kb;
+            this.product = product;
+        }
+    }
+</script>
+
+</html>
