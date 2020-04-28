@@ -1,0 +1,151 @@
+product,group
+ChakraCore,group1
+Dynamics 365 Business Central 2019 Release Wave 2 (On-Premise),group2
+Dynamics 365 Business Central 2019 Spring Update,group3
+Dynamics 365 Server, version 9.0 (on-premises),group4
+Internet Explorer 11,group1
+Internet Explorer 9,group2
+Microsoft Access 2010 Service Pack 2 (32-bit editions),group3
+Microsoft Access 2010 Service Pack 2 (64-bit editions),group4
+Microsoft Access 2013 Service Pack 1 (32-bit editions),group1
+Microsoft Access 2013 Service Pack 1 (64-bit editions),group2
+Microsoft Access 2016 (32-bit edition),group3
+Microsoft Access 2016 (64-bit edition),group4
+Microsoft AutoUpdate for Mac,group1
+Microsoft Business Productivity Servers 2010 Service Pack 2,group2
+Microsoft Dynamics 365 BC On Premise,group3
+Microsoft Dynamics NAV 2013,group4
+Microsoft Dynamics NAV 2015,group1
+Microsoft Dynamics NAV 2016,group2
+Microsoft Dynamics NAV 2017,group3
+Microsoft Dynamics NAV 2018,group4
+Microsoft Edge (EdgeHTML-based),group1
+Microsoft Excel 2010 Service Pack 2 (32-bit editions),group2
+Microsoft Excel 2010 Service Pack 2 (64-bit editions),group3
+Microsoft Excel 2013 RT Service Pack 1,group4
+Microsoft Excel 2013 Service Pack 1 (32-bit editions),group1
+Microsoft Excel 2013 Service Pack 1 (64-bit editions),group2
+Microsoft Excel 2016 (32-bit edition),group3
+Microsoft Excel 2016 (64-bit edition),group4
+Microsoft Forefront Endpoint Protection 2010,group1
+Microsoft Office 2010 Service Pack 2 (32-bit editions),group2
+Microsoft Office 2010 Service Pack 2 (64-bit editions),group3
+Microsoft Office 2013 RT Service Pack 1,group4
+Microsoft Office 2013 Service Pack 1 (32-bit editions),group1
+Microsoft Office 2013 Service Pack 1 (64-bit editions),group2
+Microsoft Office 2016 (32-bit edition),group3
+Microsoft Office 2016 (64-bit edition),group4
+Microsoft Office 2016 for Mac,group1
+Microsoft Office 2019 for 32-bit editions,group2
+Microsoft Office 2019 for 64-bit editions,group3
+Microsoft Office 2019 for Mac,group4
+Microsoft Office Online Server,group1
+Microsoft Office Web Apps 2010 Service Pack 2,group2
+Microsoft Office Web Apps 2013 Service Pack 1,group3
+Microsoft Outlook 2010 Service Pack 2 (32-bit editions),group4
+Microsoft Outlook 2010 Service Pack 2 (64-bit editions),group1
+Microsoft Outlook 2013 RT Service Pack 1,group2
+Microsoft Outlook 2013 Service Pack 1 (32-bit editions),group3
+Microsoft Outlook 2013 Service Pack 1 (64-bit editions),group4
+Microsoft Outlook 2016 (32-bit edition),group1
+Microsoft Outlook 2016 (64-bit edition),group2
+Microsoft PowerPoint 2010 Service Pack 2 (32-bit editions),group2
+Microsoft PowerPoint 2010 Service Pack 2 (64-bit editions),group3
+Microsoft PowerPoint 2013 RT Service Pack 1,group4
+Microsoft PowerPoint 2013 Service Pack 1 (32-bit editions),group1
+Microsoft PowerPoint 2013 Service Pack 1 (64-bit editions),group2
+Microsoft PowerPoint 2016 (32-bit edition),group3
+Microsoft PowerPoint 2016 (64-bit edition),group4
+Microsoft Project 2010 Service Pack 2 (32-bit editions),group1
+Microsoft Project 2010 Service Pack 2 (64-bit editions),group2
+Microsoft Project 2013 Service Pack 1 (32-bit editions),group3
+Microsoft Project 2013 Service Pack 1 (64-bit editions),group4
+Microsoft Project 2016 (32-bit edition),group1
+Microsoft Project 2016 (64-bit edition),group2
+Microsoft Project Server 2013 Service Pack 1 (64-bit edition),group3
+Microsoft Publisher 2010 Service Pack 2 (32-bit editions),group4
+Microsoft Publisher 2010 Service Pack 2 (64-bit editions),group1
+Microsoft Publisher 2013 Service Pack 1 (32-bit editions),group2
+Microsoft Publisher 2013 Service Pack 1 (64-bit editions),group3
+Microsoft Publisher 2016 (32-bit edition),group4
+Microsoft Publisher 2016 (64-bit edition),group1
+Microsoft Remote Desktop for Mac,group2
+Microsoft Research JavaScript Cryptography Library V1.4,group3
+Microsoft RMS Sharing for Mac,group4
+Microsoft Security Essentials,group1
+Microsoft SharePoint Enterprise Server 2013 Service Pack 1,group2
+Microsoft SharePoint Enterprise Server 2016,group3
+Microsoft SharePoint Foundation 2010 Service Pack 2,group4
+Microsoft SharePoint Foundation 2013 Service Pack 1,group1
+Microsoft SharePoint Server 2010 Service Pack 2,group2
+Microsoft SharePoint Server 2019,group3
+Microsoft System Center 2012 Endpoint Protection,group4
+Microsoft System Center 2012 R2 Endpoint Protection,group1
+Microsoft System Center Endpoint Protection,group2
+Microsoft Visio 2010 Service Pack 2 (32-bit editions),group3
+Microsoft Visio 2010 Service Pack 2 (64-bit editions),group4
+Microsoft Visio 2013 Service Pack 1 (32-bit editions),group1
+Microsoft Visio 2013 Service Pack 1 (64-bit editions),group2
+Microsoft Visio 2016 (32-bit edition),group3
+Microsoft Visio 2016 (64-bit edition),group4
+Microsoft Visual Studio 2015 Update 3,group1
+Microsoft Visual Studio 2017 version 15.9 (includes 15.1 - 15.8),group2
+Microsoft Visual Studio 2019 version 16.0,group3
+Microsoft Visual Studio 2019 version 16.4 (includes 16.0 - 16.3),group4
+Microsoft Visual Studio 2019 version 16.5,group1
+Microsoft Word 2010 Service Pack 2 (32-bit editions),group2
+Microsoft Word 2010 Service Pack 2 (64-bit editions),group3
+Microsoft Word 2013 RT Service Pack 1,group4
+Microsoft Word 2013 Service Pack 1 (32-bit editions),group1
+Microsoft Word 2013 Service Pack 1 (64-bit editions),group2
+Microsoft Word 2016 (32-bit edition),group3
+Microsoft Word 2016 (64-bit edition),group4
+Microsoft Your Phone Companion App for Android,group1
+Office 365 ProPlus for 32-bit Systems,group2
+Office 365 ProPlus for 64-bit Systems,group3
+OneDrive for Windows,group4
+Windows 10 for 32-bit Systems,group1
+Windows 10 for x64-based Systems,group2
+Windows 10 Version 1607 for 32-bit Systems,group3
+Windows 10 Version 1607 for x64-based Systems,group4
+Windows 10 Version 1709 for 32-bit Systems,group1
+Windows 10 Version 1709 for ARM64-based Systems,group2
+Windows 10 Version 1709 for x64-based Systems,group3
+Windows 10 Version 1803 for 32-bit Systems,group4
+Windows 10 Version 1803 for ARM64-based Systems,group1
+Windows 10 Version 1803 for x64-based Systems,group2
+Windows 10 Version 1809 for 32-bit Systems,group3
+Windows 10 Version 1809 for ARM64-based Systems,group3
+Windows 10 Version 1809 for x64-based Systems,group4
+Windows 10 Version 1903 for 32-bit Systems,group1
+Windows 10 Version 1903 for ARM64-based Systems,group2
+Windows 10 Version 1903 for x64-based Systems,group3
+Windows 10 Version 1909 for 32-bit Systems,group4
+Windows 10 Version 1909 for ARM64-based Systems,group1
+Windows 10 Version 1909 for x64-based Systems,group2
+Windows 7 for 32-bit Systems Service Pack 1,group3
+Windows 7 for x64-based Systems Service Pack 1,group4
+Windows 8.1 for 32-bit systems,group1
+Windows 8.1 for x64-based systems,group2
+Windows Defender,group3
+Windows Defender antimalware platform,group4
+Windows RT 8.1,group1
+Windows Server 2008 for 32-bit Systems Service Pack 2,group2
+Windows Server 2008 for 32-bit Systems Service Pack 2 (Server Core installation),group3
+Windows Server 2008 for Itanium-Based Systems Service Pack 2,group4
+Windows Server 2008 for x64-based Systems Service Pack 2,group1
+Windows Server 2008 for x64-based Systems Service Pack 2 (Server Core installation),group2
+Windows Server 2008 R2 for Itanium-Based Systems Service Pack 1,group3
+Windows Server 2008 R2 for x64-based Systems Service Pack 1,group4
+Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation),group1
+Windows Server 2012,group2
+Windows Server 2012 (Server Core installation),group3
+Windows Server 2012 R2,group4
+Windows Server 2012 R2 (Server Core installation),group1
+Windows Server 2016,group2
+Windows Server 2016  (Server Core installation),group3
+Windows Server 2019,group3
+Windows Server 2019  (Server Core installation),group4
+Windows Server version 1803  (Server Core Installation),group1
+Windows Server version 1903 (Server Core installation),group2
+Windows Server version 1909 (Server Core installation),group3

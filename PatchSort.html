@@ -12,10 +12,23 @@
         font-family: "Courier New";
         font-size: small;
     }
+    h3{
+        color:#ffffff;
+        font-size: x-large;
+        font-weight: normal;
+        font-family: Candara;
+    }
     label{
         color:#ffffff;
         font-size: x-large;
         font-family: Candara;
+    }
+    input{
+        background-color: #ffffff;
+        color: black;
+        font-family: Candara;
+        font-size: small;
+        border-color: #f6023f;
     }
     button{
         background-color: #f6023f;
@@ -25,18 +38,44 @@
         font-weight: bold;
         border-color: #f6023f;
     }
-    p.help{
-        color: white;
+    div.help{
+        color: black;
         font-family: Candara;
         font-size: medium;
         padding: 10px;
+        background-color: antiquewhite;
+    }
+    a:link{
+        color: darkslateblue;
+    }
+    a:visited{
+        color: darkslateblue;
     }
 </style>
 
 <body>
 <img src="patchsort.png" width="100%">
-<p class="help">
-    To use PatchSort, do blah...
+<div class="help">
+<p><b>INSTRUCTIONS</b></p>
+<p>
+    (1) Upload the Master file (<i>master.csv</i>) from this directory by clicking <i>Choose File</i> in the MASTER FILE section.
+</p>
+<p>
+    (2) Copy-paste the latest Security Update list into the SECURITY UPDATES field. To do this you will need to download the .xlsx file from the
+    <a href="https://portal.msrc.microsoft.com/en-us/security-guidance" target="_blank">Microsoft Security Update Guide</a>
+    and save it as a .csv.
+</p>
+<p>
+    (3) Copy-paste the <i>Known Issues</i> table from <i>Release Notes</i> page into the KNOWN ISSUES field. This can be found at the URL
+    portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/{YEAR}-{Mon}, e.g. portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/2020-Apr.
+</p>
+<p>
+    (4) Press SORT and pray to all the gods.
+</p>
+</div>
+<p>
+    <h3>> MASTER FILE</h3>
+    <input id="groups_file" type="file">Upload Master File</input>
 </p>
 <p>
     <label for="security_updates">> SECURITY UPDATES</label>
@@ -62,52 +101,72 @@
         var known_issues = import_known_issues();
         if(known_issues == null){
             alert("You need to paste the table of known issues in the 'Known Issues' field!");
+            return;
+        }
+        var responsible_groups = import_responsible_groups();
+        if(responsible_groups == null){
+            alert("Error importing the master list!");
+            return;
         }
 
+    }
 
-
+    function import_responsible_groups(){
+        //FIXME need to get the master.csv file somehow
     }
 
     function import_security_updates(){
         var raw = document.getElementById("security_updates").value;
         var lines = raw.split('\n');
-        var security_updates = null;
-        var headings = false;
-        if(lines[0].indexOf("Date,Product") != -1){
-            //user has copied headings
-            security_updates = [lines.length - 1];
-            headings = true;
-        }else{
-            //user has only copied the content
-            security_updates = [lines.length];
-        }
+        var security_updates = [];
+
         for(var i=0; i<lines.length; i++){
 
-            //skip the heading line
-            if(headings){
-                continue;
-            }
-
-            //check for nested commas
-            if(lines[i].indexOf("\"") != -1){
-                //FIXME console.log("Before strip: " + lines[i]);
-                lines[i] = strip_commas(lines[i]);
-                //FIXME console.log("After strip: " + lines[i]);
+            //skip the heading line if it exists and blank lines
+            if(lines[i] != null && lines[i] != "" && lines[i].indexOf("Date,Product") == -1){
+                //check for nested commas
+                lines[i] = strip_nested_commas(lines[i]);
+                var params = lines[i].split(",");
+                security_updates.push(new patch(params[0], params[1], params[2], params[3], params[4], params[5], params[6]));
             }
         }
+
+        return security_updates;
     }
 
     function import_known_issues(){
         var raw = document.getElementById("known_issues").value;
+        var lines = raw.split('\n');
+        var known_issues = [];
+        console.log("lines.length: " + lines.length);
+        for(var i=0; i<lines.length; i++){
 
+            //skip the heading line if it exists and blank lines
+            if(lines[i] != null && lines[i] != "" && lines[i].indexOf("Applies To") == -1){
+                var first_space = get_first_space(lines[i]);
+                known_issues.push(new known_issue(lines[i].substring(0, first_space).trim(), lines[i].substring(first_space).trim()));
+            }
+        }
+        return known_issues;
     }
 
-    function strip_commas(line){
-        var index_first_quote = line.indexOf(",\"");
-        var index_last_quote = line.indexOf("\",");
-        return line.substring(0, index_first_quote + 1) + line.substring(index_first_quote + 2, index_last_quote).replace(",", "") + line.substring(index_last_quote + 1);
+    function strip_nested_commas(line){
+        if(line.indexOf("\"") != -1){
+            var index_first_quote = line.indexOf(",\"");
+            var index_last_quote = line.indexOf("\",");
+            return line.substring(0, index_first_quote + 1) + line.substring(index_first_quote + 2, index_last_quote).replace(",", "") + line.substring(index_last_quote + 1);
+        }else{
+            return line;
+        }
     }
 
+    function get_first_space(line){
+        var i = 0;
+        while(line.charAt(i) in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']){
+            i++;
+        }
+        return i;
+    }
     class patch{
         constructor(date, product, product_family, platform, article, download, details){
             this.date = date;
@@ -123,6 +182,13 @@
     class known_issue{
         constructor(kb, product){
             this.kb = kb;
+            this.product = product;
+        }
+    }
+
+    class responsible_group{
+        constructor(group, product){
+            this.group = group;
             this.product = product;
         }
     }
