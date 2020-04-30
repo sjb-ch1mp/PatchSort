@@ -1,85 +1,40 @@
 <!DOCTYPE html>
 <html lang="en-GB">
+
 <head>
     <title>PatchSort v1</title>
+    <link rel="stylesheet" type="text/css" href="css/patchsort.css"/>
+    <script src="js/patchsort.js"></script>
+    <script src="js/import.js"></script>
+    <script src="js/util.js"></script>
 </head>
-<style>
-    body{
-        background-color:#000000;
-    }
-    textarea{
-        width:100%;
-        font-family: "Courier New";
-        font-size: small;
-    }
-    h3{
-        color:#ffffff;
-        font-size: x-large;
-        font-weight: normal;
-        font-family: Candara;
-    }
-    label{
-        color:#ffffff;
-        font-size: x-large;
-        font-family: Candara;
-    }
-    input{
-        background-color: #ffffff;
-        color: black;
-        font-family: Candara;
-        font-size: small;
-        border-color: #f6023f;
-    }
-    button{
-        background-color: #f6023f;
-        color: black;
-        font-family: Candara;
-        font-size: x-large;
-        font-weight: bold;
-        border-color: #f6023f;
-    }
-    div.help{
-        color: black;
-        font-family: Candara;
-        font-size: medium;
-        padding: 10px;
-        background-color: antiquewhite;
-    }
-    a:link{
-        color: darkslateblue;
-    }
-    a:visited{
-        color: darkslateblue;
-    }
-</style>
 
 <body>
-<img src="patchsort.png" width="100%">
+
+<!-- PATCHSORT BANNER -->
+<img src="img/patchsort.png" width="100%">
+
+<!-- INSTRUCTIONS -->
 <div class="help">
 <p><b>INSTRUCTIONS</b></p>
 <p>
-    (1) Upload the Master file (<i>master.csv</i>) from this directory by clicking <i>Choose File</i> in the MASTER FILE section.
-</p>
-<p>
-    (2) Copy-paste the latest Security Update list into the SECURITY UPDATES field. To do this you will need to download the .xlsx file from the
+    (1) Upload the latest Security Update list by clicking Choose File in the SECURITY UPDATES section. To do this you will need to download the .xlsx file from the
     <a href="https://portal.msrc.microsoft.com/en-us/security-guidance" target="_blank">Microsoft Security Update Guide</a>
     and save it as a .csv.
 </p>
 <p>
-    (3) Copy-paste the <i>Known Issues</i> table from <i>Release Notes</i> page into the KNOWN ISSUES field. This can be found at the URL
+    (2) Copy-paste the <i>Known Issues</i> table from <i>Release Notes</i> page into the KNOWN ISSUES field. This can be found at the URL
     portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/{YEAR}-{Mon}, e.g. portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/2020-Apr.
 </p>
 <p>
-    (4) Press SORT and pray to all the gods.
+    (3) Press SORT and pray to all the gods.
 </p>
 </div>
+
+<!-- DATA -->
 <p>
-    <h3>> MASTER FILE</h3>
-    <input id="groups_file" type="file">Upload Master File</input>
-</p>
-<p>
-    <label for="security_updates">> SECURITY UPDATES</label>
-    <textarea id="security_updates" rows="25"></textarea>
+    <h3>> SECURITY UPDATES</h3>
+    <input id="security_updates" type="file">Upload Security Update</input>
 </p>
 <p>
     <label for="known_issues">> KNOWN ISSUES</label>
@@ -88,110 +43,7 @@
 <p align="center">
     <button onclick="patchsort()">> SORT</button>
 </p>
+
 </body>
-
-<script>
-    function patchsort(){
-
-        var security_updates = import_security_updates();
-        if(security_updates == null){
-            alert("You need to paste the contents of the security update in the 'Security Updates' field!");
-            return;
-        }
-        var known_issues = import_known_issues();
-        if(known_issues == null){
-            alert("You need to paste the table of known issues in the 'Known Issues' field!");
-            return;
-        }
-        var responsible_groups = import_responsible_groups();
-        if(responsible_groups == null){
-            alert("Error importing the master list!");
-            return;
-        }
-
-    }
-
-    function import_responsible_groups(){
-        //FIXME need to get the master.csv file somehow
-    }
-
-    function import_security_updates(){
-        var raw = document.getElementById("security_updates").value;
-        var lines = raw.split('\n');
-        var security_updates = [];
-
-        for(var i=0; i<lines.length; i++){
-
-            //skip the heading line if it exists and blank lines
-            if(lines[i] != null && lines[i] != "" && lines[i].indexOf("Date,Product") == -1){
-                //check for nested commas
-                lines[i] = strip_nested_commas(lines[i]);
-                var params = lines[i].split(",");
-                security_updates.push(new patch(params[0], params[1], params[2], params[3], params[4], params[5], params[6]));
-            }
-        }
-
-        return security_updates;
-    }
-
-    function import_known_issues(){
-        var raw = document.getElementById("known_issues").value;
-        var lines = raw.split('\n');
-        var known_issues = [];
-        console.log("lines.length: " + lines.length);
-        for(var i=0; i<lines.length; i++){
-
-            //skip the heading line if it exists and blank lines
-            if(lines[i] != null && lines[i] != "" && lines[i].indexOf("Applies To") == -1){
-                var first_space = get_first_space(lines[i]);
-                known_issues.push(new known_issue(lines[i].substring(0, first_space).trim(), lines[i].substring(first_space).trim()));
-            }
-        }
-        return known_issues;
-    }
-
-    function strip_nested_commas(line){
-        if(line.indexOf("\"") != -1){
-            var index_first_quote = line.indexOf(",\"");
-            var index_last_quote = line.indexOf("\",");
-            return line.substring(0, index_first_quote + 1) + line.substring(index_first_quote + 2, index_last_quote).replace(",", "") + line.substring(index_last_quote + 1);
-        }else{
-            return line;
-        }
-    }
-
-    function get_first_space(line){
-        var i = 0;
-        while(line.charAt(i) in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']){
-            i++;
-        }
-        return i;
-    }
-    class patch{
-        constructor(date, product, product_family, platform, article, download, details){
-            this.date = date;
-            this.product = product;
-            this.product_family = product_family;
-            this.platform = platform;
-            this.article = article;
-            this.download = download;
-            this.details = details;
-        }
-    }
-
-    class known_issue{
-        constructor(kb, product){
-            this.kb = kb;
-            this.product = product;
-        }
-    }
-
-    class responsible_group{
-        constructor(group, product){
-            this.group = group;
-            this.product = product;
-        }
-    }
-</script>
 
 </html>

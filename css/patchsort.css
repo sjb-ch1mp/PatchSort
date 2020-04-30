@@ -1,0 +1,51 @@
+/**
+ PatchSort CSS
+ */
+
+body{
+    background-color:#000000;
+}
+textarea{
+    width:100%;
+    font-family: "Courier New";
+    font-size: small;
+}
+h3{
+    color:#ffffff;
+    font-size: x-large;
+    font-weight: normal;
+    font-family: Candara;
+}
+label{
+    color:#ffffff;
+    font-size: x-large;
+    font-family: Candara;
+}
+input{
+    background-color: #ffffff;
+    color: black;
+    font-family: Candara;
+    font-size: small;
+    border-color: #f6023f;
+}
+button{
+    background-color: #f6023f;
+    color: black;
+    font-family: Candara;
+    font-size: x-large;
+    font-weight: bold;
+    border-color: #f6023f;
+}
+div.help{
+    color: black;
+    font-family: Candara;
+    font-size: medium;
+    padding: 10px;
+    background-color: antiquewhite;
+}
+a:link{
+    color: darkslateblue;
+}
+a:visited{
+    color: darkslateblue;
+}
