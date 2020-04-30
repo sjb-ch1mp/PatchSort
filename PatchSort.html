@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-GB">
-
 <head>
     <title>PatchSort v1</title>
     <link rel="stylesheet" type="text/css" href="css/patchsort.css"/>
@@ -8,42 +7,51 @@
     <script src="js/import.js"></script>
     <script src="js/util.js"></script>
 </head>
-
 <body>
+
+
 
 <!-- PATCHSORT BANNER -->
 <img src="img/patchsort.png" width="100%">
 
-<!-- INSTRUCTIONS -->
-<div class="help">
-<p><b>INSTRUCTIONS</b></p>
-<p>
-    (1) Upload the latest Security Update list by clicking Choose File in the SECURITY UPDATES section. To do this you will need to download the .xlsx file from the
-    <a href="https://portal.msrc.microsoft.com/en-us/security-guidance" target="_blank">Microsoft Security Update Guide</a>
-    and save it as a .csv.
-</p>
-<p>
-    (2) Copy-paste the <i>Known Issues</i> table from <i>Release Notes</i> page into the KNOWN ISSUES field. This can be found at the URL
-    portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/{YEAR}-{Mon}, e.g. portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/2020-Apr.
-</p>
-<p>
-    (3) Press SORT and pray to all the gods.
-</p>
-</div>
-
 <!-- DATA -->
 <p>
-    <h3>> SECURITY UPDATES</h3>
-    <input id="security_updates" type="file">Upload Security Update</input>
+    <h3>> MASTER FILE</h3>
+    <div class="help">
+        <p>Upload the file "data/master.csv" from this directory.</p>
+    </div>
+    <input id="master_file" type="file" accept="text/csv" onchange="load_file(this,'master')"/>
 </p>
+<p id="master_file_status" class="status"></p>
 <p>
-    <label for="known_issues">> KNOWN ISSUES</label>
-    <textarea id="known_issues" rows="25"></textarea>
+    <h3>> SECURITY UPDATES</h3>
+    <div class="help">
+        <p>
+            Upload the latest security update list. You will need to download the .xlsx file from the
+            <a href="https://portal.msrc.microsoft.com/en-us/security-guidance" target="_blank">Microsoft Security Update Guide</a>
+            and save it as a .csv.
+        </p>
+    </div>
+    <input id="security_updates" type="file" accept="text/csv" onchange="load_file(this,'update')"/>
 </p>
+<p id="update_file_status" class="status"></p>
+<p>
+    <h3>> KNOWN ISSUES</h3>
+    <label for="no_known_issues" class="checkbox">No Known Issues</label>
+    <input id="no_known_issues" type="checkbox"/>
+    <div class="help">
+        <p>
+            Copy-paste the known issues table from release notes page. This can be found at
+            portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/{YEAR}-{Mon}, e.g. portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/2020-Apr.
+        </p>
+    </div>
+    <textarea onchange="check_ki_contents()" id="known_issues" rows="10"></textarea>
+</p>
+<p id="known_issues_status" class="status"></p>
 <p align="center">
     <button onclick="patchsort()">> SORT</button>
 </p>
-
+<br/>
+<p class="footnote" align="center">S J Brookes : <a href="https://github.com/sjb-ch1mp/PatchSort" target="_blank">github.com/sjb-ch1mp/PatchSort</a> : April 2020</p>
 </body>
-
 </html>

@@ -21,6 +21,11 @@ label{
     font-size: x-large;
     font-family: Candara;
 }
+label.checkbox{
+    color: #f6023f;;
+    font-size: medium;
+    font-family: Candara;
+}
 input{
     background-color: #ffffff;
     color: black;
@@ -37,15 +42,27 @@ button{
     border-color: #f6023f;
 }
 div.help{
-    color: black;
+    color: white;
     font-family: Candara;
     font-size: medium;
-    padding: 10px;
-    background-color: antiquewhite;
+    background-color: black;
+}
+ol{
+    list-style: decimal;
+}
+p.status{
+    color: #f6023f;
+    font-family: "Courier New";
+    font-size: small;
+}
+p.footnote{
+    color: white;
+    font-family: "Courier New";
+    font-size: x-small;
 }
 a:link{
-    color: darkslateblue;
+    color: cadetblue;
 }
 a:visited{
-    color: darkslateblue;
+    color: cadetblue;
 }
