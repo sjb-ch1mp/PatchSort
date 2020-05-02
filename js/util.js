@@ -20,21 +20,28 @@ function check_ki_contents(){
 
     //if there's no text in the text area - do nothing
     if(document.getElementById("known_issues").value == ""){
-        return;
+        alert("There is nothing in the Known Fields text box and the 'No Known Issues' checkbox is not checked!");
+        return false;
     }
 
     //if the no known issues checkbox is checked - inform user that their entries will be ignored
     if(document.getElementById("no_known_issues").checked){
-        document.getElementById("known_issues_status").innerText = "The 'No Known Issues' button is checked. Text in the Known Issues text box will be ignored!";
-        return;
+        return true;
     }
 
     //otherwise check the contents of the known issues textarea
     let text = document.getElementById("known_issues").value;
-    let headers = text.split('\n')[0];
+    let i = 0;
+    let headers = text.split('\n')[i];
+    while(headers == ""){
+        //iterate through text in case there are leading blank spaces
+        headers = text.split('\n')[++i];
+    }
+
     if(headers.indexOf("KB Article") != -1 && headers.indexOf("Applies To") != -1){
-        document.getElementById("known_issues_status").innerText = "Known issues ready!";
+        return true;
     }else{
-        document.getElementById("known_issues_status").innerText = "Hmmm... That doesn't look like a known issues table. Please include the headers of the known issues table or tick 'No Known Issues' if there are no known issues.";
+        alert("Hmmm... That doesn't look like a known issues table. Please include the headers of the known issues table or tick 'No Known Issues' if there are no known issues.");
+        return false;
     }
 }

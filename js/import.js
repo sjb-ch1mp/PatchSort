@@ -54,6 +54,7 @@ function load_file(input, file_type){
 
 function import_security_updates(){
     if(security_updates_file == null){
+        //the user has forgotten to upload the security updates file
         return null;
     }
     let lines = security_updates_file.split('\n');
@@ -87,23 +88,27 @@ function import_known_issues(){
     return known_issues;
 }
 
-function import_groups(){
+function import_responsible_groups(){
+    if(master_file == null){
+        //the user has forgotten to upload the master file
+        return null;
+    }
     let lines = master_file.split('\n');
     let groups = [];
 
     for(let i=0; i<lines.length; i++){
         //skip the heading line
-        if(lines[i] != null && lines[i] != "" && lines[i].indexOf("Applies To") == -1){
-            let first_space = get_first_space(lines[i]);
-            groups.push(new group(lines[i].substring(0, first_space), lines[i].substring(first_space + 1)));
+        if(lines[i] != null && lines[i] != "" && lines[i].indexOf("product,group") == -1){
+            groups.push(new rgroup(lines[i].split(",")[0].trim(), lines[i].split(",")[1].trim()));
         }
     }
     return groups;
 }
 
-class group{
-    constructor(group, product){
-        this.group = group;
+//rgroup = responsible group
+class rgroup{
+    constructor(product, rgroup){
+        this.group = rgroup;
         this.product = product;
     }
 }
