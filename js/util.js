@@ -9,8 +9,9 @@ function strip_nested_commas(line){
 }
 
 function get_first_space(line){
+    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     let i = 0;
-    while(line.charAt(i) in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']){
+    while(numbers.indexOf(line.charAt(i)) > -1){
         i++;
     }
     return i;
@@ -44,4 +45,29 @@ function check_ki_contents(){
         alert("Hmmm... That doesn't look like a known issues table. Please include the headers of the known issues table or tick 'No Known Issues' if there are no known issues.");
         return false;
     }
+}
+
+function alphabetize_patches(group_patches, sort_by){
+    for(let i=0; i<group_patches.length; i++){
+        for(let j=i; j<group_patches.length; j++){
+            if((sort_by == "product" && group_patches[i].product > group_patches[j].product) ||
+                (sort_by == "details" && group_patches[i].details > group_patches[j].details) ||
+                (sort_by == "article" && group_patches[i].article > group_patches[j].article)) {
+                let hold = group_patches[i];
+                group_patches[i] = group_patches[j];
+                group_patches[j] = hold;
+            }
+        }
+    }
+    return group_patches;
+}
+
+function is_article(article){
+    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    for(let i=0; i<article.length; i++){
+        if(numbers.indexOf(article.substring(i, i+1)) == -1){
+            return false;
+        }
+    }
+    return true;
 }

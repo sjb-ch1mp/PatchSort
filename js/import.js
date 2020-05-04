@@ -66,7 +66,7 @@ function import_security_updates(){
             //check for nested commas
             lines[i] = strip_nested_commas(lines[i]);
             let params = lines[i].split(",");
-            security_updates.push(new patch(params[0], params[1], params[2], params[3], params[4], params[5], params[6]));
+            security_updates.push(new patch(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8]));
         }
     }
     return security_updates;
@@ -105,22 +105,36 @@ function import_responsible_groups(){
     return groups;
 }
 
+function collect_groups(rgroups){
+    //collate a list of groups
+    let group_list = [];
+    for(let i=0; i<rgroups.length; i++){
+        if(group_list.indexOf(rgroups[i].group_name) == -1){
+            console.log(rgroups[i].group_name);
+            group_list.push(rgroups[i].group_name);
+        }
+    }
+    return group_list;
+}
+
 //rgroup = responsible group
 class rgroup{
     constructor(product, rgroup){
-        this.group = rgroup;
+        this.group_name = rgroup;
         this.product = product;
     }
 }
 
 class patch{
-    constructor(date, product, product_family, platform, article, download, details){
+    constructor(date, product, product_family, platform, article, download, severity, impact, details){
         this.date = date;
         this.product = product;
         this.product_family = product_family;
         this.platform = platform;
         this.article = article;
         this.download = download;
+        this.severity = severity;
+        this.impact = impact;
         this.details = details;
     }
 }
