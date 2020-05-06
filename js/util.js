@@ -17,57 +17,115 @@ function get_first_space(line){
     return i;
 }
 
-function check_ki_contents(){
-
-    //if there's no text in the text area - do nothing
-    if(document.getElementById("known_issues").value == ""){
-        alert("There is nothing in the Known Fields text box and the 'No Known Issues' checkbox is not checked!");
-        return false;
-    }
-
-    //if the no known issues checkbox is checked - inform user that their entries will be ignored
-    if(document.getElementById("no_known_issues").checked){
-        return true;
-    }
-
-    //otherwise check the contents of the known issues textarea
-    let text = document.getElementById("known_issues").value;
-    let i = 0;
-    let headers = text.split('\n')[i];
-    while(headers == ""){
-        //iterate through text in case there are leading blank spaces
-        headers = text.split('\n')[++i];
-    }
-
-    if(headers.indexOf("KB Article") != -1 && headers.indexOf("Applies To") != -1){
-        return true;
-    }else{
-        alert("Hmmm... That doesn't look like a known issues table. Please include the headers of the known issues table or tick 'No Known Issues' if there are no known issues.");
-        return false;
-    }
-}
-
-function alphabetize_patches(group_patches, sort_by){
-    for(let i=0; i<group_patches.length; i++){
-        for(let j=i; j<group_patches.length; j++){
-            if((sort_by == "product" && group_patches[i].product > group_patches[j].product) ||
-                (sort_by == "details" && group_patches[i].details > group_patches[j].details) ||
-                (sort_by == "article" && group_patches[i].article > group_patches[j].article)) {
-                let hold = group_patches[i];
-                group_patches[i] = group_patches[j];
-                group_patches[j] = hold;
+function alphabetize(list){
+    if(list != undefined && list.length > 1){
+        for(let i=0; i<list.length; i++){
+            for(let j=i; j<list.length; j++){
+                if(list[i] > list[j]) {
+                    let hold = list[i];
+                    list[i] = list[j];
+                    list[j] = hold;
+                }
             }
         }
     }
-    return group_patches;
+    return list;
 }
 
 function is_article(article){
-    let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    for(let i=0; i<article.length; i++){
-        if(numbers.indexOf(article.substring(i, i+1)) == -1){
-            return false;
+    if(article == undefined || article == ""){
+        return false;
+    }else{
+        let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        for(let i=0; i<article.length; i++){
+            if(numbers.indexOf(article.substring(i, i+1)) == -1){
+                return false;
+            }
         }
     }
     return true;
+}
+
+function download_results(results){
+    // Adapted from: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server/18197341#18197341
+    let blob = new Blob(results, {type: 'text/plain'});
+    if(window.navigator.msSaveOrOpenBlob){
+        window.navigator.msSaveOrOpenBlob(blob, "group-lists.txt");
+    }else{
+        let element = window.document.createElement('a');
+        element.href = window.URL.createObjectURL(blob);
+        element.download = "group-lists.txt";
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+}
+
+function is_responsible(product, platform, master_list, group){
+
+    //if the platform exists - this means that
+    //this is an application that runs on multiple
+    //platforms. If the group is responsible for the
+    //platform, then they are responsible for any applications
+    //on that platform, and vice versa.
+
+    let compare_to = product;
+    if(platform != undefined && platform != ""){
+        compare_to = platform;
+    }
+
+    for(let i=0; i<master_list.length; i++){
+
+        if(master_list[i].product == compare_to && master_list[i].group_name == group){
+            return true;
+        }
+    }
+    return false;
+}
+
+function get_release_notes_url(){
+    let d = new Date();
+    let y = d.getFullYear();
+    let m = get_month_abbreviation(d.getMonth());
+    return "https://portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/" + y + "-" + m;
+}
+
+function get_month_abbreviation(m){
+    switch(m){
+        case 1:
+            return  "Jan";
+            break;
+        case 2:
+            return "Feb";
+            break;
+        case 3:
+            return "Mar";
+            break;
+        case 4:
+            return "Apr";
+            break;
+        case 5:
+            return "May";
+            break;
+        case 6:
+            return "Jun";
+            break;
+        case 7:
+            return "Jul";
+            break;
+        case 8:
+            return "Aug";
+            break;
+        case 9:
+            return "Sep";
+            break;
+        case 10:
+            return "Oct";
+            break;
+        case 11:
+            return "Nov";
+            break;
+        default:
+            return "Dec";
+    }
 }

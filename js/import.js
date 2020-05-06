@@ -10,9 +10,9 @@ function load_file(input, file_type){
             return;
         }
 
-        //check name of master.csv
-        if(file_type == "master" && loaded_file.name != "master.csv") {
-            throw new Error("Incorrect file. Please load 'master.csv'.");
+        //check name of patchsort-master.csv
+        if(file_type == "master" && loaded_file.name != "patchsort-master.csv") {
+            throw new Error("Incorrect file. Please load 'patchsort-master.csv'.");
         }else if(file_type == "update" && loaded_file.name != "Security Updates.csv"){
             throw new Error("Incorrect file. Please load 'Security Updates.csv'.");
         }
@@ -88,21 +88,21 @@ function import_known_issues(){
     return known_issues;
 }
 
-function import_responsible_groups(){
+function import_master_list(){
     if(master_file == null){
         //the user has forgotten to upload the master file
         return null;
     }
     let lines = master_file.split('\n');
-    let groups = [];
+    let master_list = [];
 
     for(let i=0; i<lines.length; i++){
         //skip the heading line
         if(lines[i] != null && lines[i] != "" && lines[i].indexOf("product,group") == -1){
-            groups.push(new rgroup(lines[i].split(",")[0].trim(), lines[i].split(",")[1].trim()));
+            master_list.push(new rgroup(lines[i].split(",")[0].trim(), lines[i].split(",")[1].trim()));
         }
     }
-    return groups;
+    return master_list;
 }
 
 function collect_groups(rgroups){
