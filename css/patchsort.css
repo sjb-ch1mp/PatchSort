@@ -3,26 +3,38 @@
  */
 
 body{
-    background-color:#000000;
+    background-color:#040404;
 }
 textarea{
-    width:100%;
+    width:50%;
     font-family: "Courier New";
     font-size: small;
 }
-h3{
-    color:#ffffff;
+div.body{
+    padding-left: 5%;
+    padding-right: 25%;
+    horiz-align: center;
+}
+h3.first{
+    color:#C11D27;
     font-size: x-large;
     font-weight: normal;
     font-family: Candara;
 }
-label{
-    color:#ffffff;
+h3.second{
+    color:#CE2926;
     font-size: x-large;
+    font-weight: normal;
+    font-family: Candara;
+}
+h3.third{
+    color:#CF473F;
+    font-size: x-large;
+    font-weight: normal;
     font-family: Candara;
 }
 label.checkbox{
-    color: #f6023f;;
+    color: #CF473F;
     font-size: medium;
     font-family: Candara;
 }
@@ -34,26 +46,32 @@ input{
     border-color: #f6023f;
 }
 button{
-    background-color: #f6023f;
+    background-color: #E06349;
     color: black;
     font-family: Candara;
     font-size: x-large;
     font-weight: bold;
-    border-color: #f6023f;
+    border-color: #E06349;
+    width: 50%;
 }
 div.help{
     color: white;
     font-family: Candara;
     font-size: medium;
-    background-color: black;
+    background-color: #040404;
 }
 ol{
     list-style: decimal;
 }
-p.status{
-    color: #f6023f;
+p.status_master{
+    color: #C11D27;
     font-family: "Courier New";
-    font-size: small;
+    font-size: medium;
+}
+p.status_updates{
+    color: #CE2926;
+    font-family: "Courier New";
+    font-size: medium;
 }
 p.footnote{
     color: white;

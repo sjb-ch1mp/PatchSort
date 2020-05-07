@@ -8,21 +8,24 @@
     <script src="js/util.js"></script>
 </head>
 <body>
-
 <!-- PATCHSORT BANNER -->
 <img src="img/patchsort.png" width="100%">
-
 <!-- DATA -->
+<div class="body">
 <p>
-    <h3>> MASTER FILE</h3>
+    <h3 class="first">> MASTER FILE</h3>
     <div class="help">
         <p>Upload the file "patchsort-master.csv".</p>
     </div>
-    <input id="master_file" type="file" accept="text/csv" onchange="load_file(this,'master')"/>
+    <table>
+        <tr>
+            <td><input id="master_file" type="file" accept="text/csv" onchange="load_file(this,'master')"/></td>
+            <td><p id="master_file_status" class="status_master"></p></td>
+        </tr>
+    </table>
 </p>
-<p id="master_file_status" class="status"></p>
 <p>
-    <h3>> SECURITY UPDATES</h3>
+    <h3 class="second">> SECURITY UPDATES</h3>
     <div class="help">
         <p>
             Upload the file "Security Updates.csv". You will need to download the latest security updates .xlsx file from the
@@ -30,27 +33,37 @@
             and save it as a .csv.
         </p>
     </div>
-    <input id="security_updates" type="file" accept="text/csv" onchange="load_file(this,'update')"/>
+    <table>
+        <tr>
+            <td><input id="security_updates" type="file" accept="text/csv" onchange="load_file(this,'update')"/></td>
+            <td><p id="update_file_status" class="status_updates"></p></td>
+        </tr>
+    </table>
 </p>
-<p id="update_file_status" class="status"></p>
 <p>
-    <h3>> KNOWN ISSUES</h3>
-    <label for="no_known_issues" class="checkbox">No Known Issues</label>
-    <input id="no_known_issues" type="checkbox"/>
+    <h3 class="third">> KNOWN ISSUES</h3>
     <div class="help">
         <p>
-            Copy-paste the known issues table from the <a id="release_notes" target="_blank">Release Notes</a> page.
+            Copy-paste the known issues table from the <a id="release_notes" target="_blank">Release Notes</a> page,
+            or click 'No Known Issues'.
         </p>
         <script>
             document.getElementById("release_notes").setAttribute("href", get_release_notes_url());
         </script>
     </div>
+    <table>
+        <tr>
+            <td><input id="no_known_issues" type="checkbox"/></td>
+            <td><label for="no_known_issues" class="checkbox">No Known Issues</label></td>
+        </tr>
+    </table>
     <textarea id="known_issues" rows="10"></textarea>
 </p>
-<p align="center">
+<p>
     <button onclick="patchsort()">> SORT</button>
 </p>
 <br/>
-<p class="footnote" align="center">S J Brookes : <a href="https://github.com/sjb-ch1mp/PatchSort" target="_blank">github.com/sjb-ch1mp/PatchSort</a> : May 2020</p>
+<p class="footnote">S J Brookes : <a href="https://github.com/sjb-ch1mp/PatchSort" target="_blank">github.com/sjb-ch1mp/PatchSort</a> : May 2020</p>
+</div>
 </body>
 </html>

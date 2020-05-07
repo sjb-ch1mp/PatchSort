@@ -25,18 +25,18 @@ function load_file(input, file_type){
             reader.readAsText(loaded_file);
             reader.onprogress = function(){
                 if(file_type == "master"){
-                    document.getElementById("master_file_status").innerText = "Loading file...";
+                    document.getElementById("master_file_status").innerText = "  ... Loading file.";
                 }else{
-                    document.getElementById("update_file_status").innerText = "Loading file...";
+                    document.getElementById("update_file_status").innerText = "  ... Loading file.";
                 }
             };
             reader.onload = function(){
                 if(file_type == "master"){
                     master_file = reader.result;
-                    document.getElementById("master_file_status").innerText = "Master file ready!";
+                    document.getElementById("master_file_status").innerText = "  ... Master file ready!";
                 }else{
                     security_updates_file = reader.result;
-                    document.getElementById("update_file_status").innerText = "Security Updates file ready!";
+                    document.getElementById("update_file_status").innerText = "  ... Security Updates file ready!";
                 }
             };
             reader.onerror = function(){
@@ -99,7 +99,8 @@ function import_master_list(){
     for(let i=0; i<lines.length; i++){
         //skip the heading line
         if(lines[i] != null && lines[i] != "" && lines[i].indexOf("product,group") == -1){
-            master_list.push(new rgroup(lines[i].split(",")[0].trim(), lines[i].split(",")[1].trim()));
+            let params = lines[i].split(",");
+            master_list.push(new rgroup(params[0].trim(), params[1].trim()));
         }
     }
     return master_list;
@@ -108,13 +109,12 @@ function import_master_list(){
 function collect_groups(rgroups){
     //collate a list of groups
     let group_list = [];
-    for(let i=0; i<rgroups.length; i++){
+    for(let i=0; i<rgroups.length; i++) {
         if(group_list.indexOf(rgroups[i].group_name) == -1){
-            console.log(rgroups[i].group_name);
             group_list.push(rgroups[i].group_name);
         }
     }
-    return group_list;
+    return alphabetize(group_list);
 }
 
 //rgroup = responsible group

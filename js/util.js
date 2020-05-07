@@ -50,11 +50,11 @@ function download_results(results){
     // Adapted from: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server/18197341#18197341
     let blob = new Blob(results, {type: 'text/plain'});
     if(window.navigator.msSaveOrOpenBlob){
-        window.navigator.msSaveOrOpenBlob(blob, "group-lists.txt");
+        window.navigator.msSaveOrOpenBlob(blob, "patch-lists_" + get_date_string() + ".txt");
     }else{
         let element = window.document.createElement('a');
         element.href = window.URL.createObjectURL(blob);
-        element.download = "group-lists.txt";
+        element.download = "patch-lists_" + get_date_string() + ".txt";
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
@@ -83,11 +83,15 @@ function is_responsible(product, platform, master_list, group){
     return false;
 }
 
-function get_release_notes_url(){
+function get_date_string(){
     let d = new Date();
     let y = d.getFullYear();
     let m = get_month_abbreviation(d.getMonth());
-    return "https://portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/" + y + "-" + m;
+    return y + "-" + m;
+}
+
+function get_release_notes_url(){
+    return "https://portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/" + get_date_string();
 }
 
 function get_month_abbreviation(m){
@@ -129,3 +133,13 @@ function get_month_abbreviation(m){
             return "Dec";
     }
 }
+
+function get_known_issue(known_issues, article){
+    for(let i=0; i<known_issues.length; i++){
+        if(known_issues[i].kb == article){
+            return known_issues[i].kb + ": " + known_issues[i].product;
+        }
+    }
+    return undefined;
+}
+
