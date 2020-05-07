@@ -74,6 +74,9 @@ function import_security_updates(){
 
 function import_known_issues(){
     let raw = document.getElementById("known_issues").value;
+	if(raw == undefined || raw == ""){
+		return undefined;
+	}
     let lines = raw.split('\n');
     let known_issues = [];
 

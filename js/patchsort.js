@@ -2,18 +2,18 @@ function patchsort(){
 
     //Load all files and lists
     let master_list = import_master_list();
-    if(master_list == null){
+    if(master_list == undefined){
         alert("You need to upload the master file!");
         return;
     }
     let patches = import_security_updates();
-    if(patches == null){
+    if(patches == undefined){
         alert("You need to upload the Security Updates CSV file!");
         return;
     }
     let no_known_issues = document.getElementById("no_known_issues").checked;
     let known_issues = import_known_issues();
-    if(!no_known_issues && known_issues == null){
+    if(known_issues == undefined && no_known_issues == false){
         alert("You need to paste the table of known issues in the 'Known Issues' field!");
         return;
     }
