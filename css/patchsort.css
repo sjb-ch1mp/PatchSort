@@ -66,12 +66,12 @@ ol{
 p.status_master{
     color: #C11D27;
     font-family: "Courier New";
-    font-size: medium;
+    font-size: small;
 }
 p.status_updates{
     color: #CE2926;
     font-family: "Courier New";
-    font-size: medium;
+    font-size: small;
 }
 p.footnote{
     color: white;

@@ -86,7 +86,27 @@ function is_responsible(product, platform, master_list, group){
 function get_date_string(){
     let d = new Date();
     let y = d.getFullYear();
-    let m = get_month_abbreviation(d.getMonth());
+
+    let first_day = new Date("1 " + get_month_abbreviation(d.getMonth()) + " " + y);
+    let get_month = d.getMonth();
+
+    //if it has not yet passed the second tuesday of the month
+    //the latest release is the previous month
+    if(first_day.getDay() == 0 && d.getDay() < 10 ||
+        first_day.getDay() == 1 && d.getDay() < 9 ||
+        first_day.getDay() == 2 && d.getDay() < 8 ||
+        first_day.getDay() == 3 && d.getDay() < 14 ||
+        first_day.getDay() == 4 && d.getDay() < 13 ||
+        first_day.getDay() == 5 && d.getDay() < 12 ||
+        first_day.getDay() == 6 && d.getDay() < 11){
+        if(get_month == 0){
+            get_month = 11;
+        }else{
+            get_month--;
+        }
+    }
+
+    let m = get_month_abbreviation(get_month);
     return y + "-" + m;
 }
 
@@ -95,40 +115,30 @@ function get_release_notes_url(){
 }
 
 function get_month_abbreviation(m){
+    
     switch(m){
+        case 0:
+            return "Jan";
         case 1:
-            return  "Jan";
-            break;
-        case 2:
             return "Feb";
-            break;
-        case 3:
+        case 2:
             return "Mar";
-            break;
-        case 4:
+        case 3:
             return "Apr";
-            break;
-        case 5:
+        case 4:
             return "May";
-            break;
-        case 6:
+        case 5:
             return "Jun";
-            break;
-        case 7:
+        case 6:
             return "Jul";
-            break;
-        case 8:
+        case 7:
             return "Aug";
-            break;
-        case 9:
+        case 8:
             return "Sep";
-            break;
-        case 10:
+        case 9:
             return "Oct";
-            break;
-        case 11:
+        case 10:
             return "Nov";
-            break;
         default:
             return "Dec";
     }

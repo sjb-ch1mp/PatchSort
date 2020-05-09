@@ -107,41 +107,63 @@ function patchsort(){
             alphabetize(group_known_issues);
             results.push("\n== List for " + group + " ==\n");
             if(group_products.length > 0){
-                results.push("\nProducts:\n\n");
+                results.push("\nSoftware:\n\n");
                 for (let j = 0; j < group_products.length; j++) {
                     results.push(group_products[j] + "\n");
                 }
             }
+
             if(group_critical_cve.length > 0 || group_important_cve.length > 0 || group_moderate_cve.length >  0 || group_low_cve.length > 0){
-                results.push("\nDetails:\n");
+                //print headers
+                let risk = "Critical";
+                let ttr = "48 hours";
+                if(group_critical_cve.length == 0 && group_important_cve.length == 0){
+                    if(group_moderate_cve.length != 0){
+                        risk = "Medium";
+                        ttr = "2 weeks"; //FIXME: check this
+                    }else{
+                        risk = "Low";
+                        ttr = "1 month"; //FIXME: check this
+                    }
+                }
+                results.push("\nRisk Category:\n");
+                results.push("\n" + risk + "\n");
+                results.push("\nTime to Respond:\n");
+                results.push("\n" + ttr + "\n");
+                results.push("\nCVE Details:\n");
+                results.push("\n" + get_release_notes_url() + "\n");
+
+                //print CVEs
                 if (group_critical_cve.length > 0) {
-                    results.push("\nCritical\n\n");
+                    results.push("\nCritical:\n\n");
                     for (let j = 0; j < group_critical_cve.length; j++) {
                         results.push(group_critical_cve[j] + "\n");
                     }
                 }
                 if (group_important_cve.length > 0) {
-                    results.push("\nImportant\n\n");
+                    results.push("\nImportant:\n\n");
                     for (let j = 0; j < group_important_cve.length; j++) {
                         results.push(group_important_cve[j] + "\n");
                     }
                 }
                 if (group_moderate_cve.length > 0) {
-                    results.push("\nModerate\n\n");
+                    results.push("\nModerate::\n\n");
                     for (let j = 0; j < group_moderate_cve.length; j++) {
                         results.push(group_moderate_cve[j] + "\n");
                     }
                 }
                 if (group_low_cve.length > 0) {
-                    results.push("\nLow\n\n");
+                    results.push("\nLow:\n\n");
                     for (let j = 0; j < group_low_cve.length; j++) {
                         results.push(group_low_cve[j] + "\n");
                     }
                 }
+            }else{
+                results.push("\nNo CVEs.\n");
             }
 
             if(group_articles.length > 0){
-                results.push("\nArticles:\n\n");
+                results.push("\nRelevant KB Articles:\n\n");
                 for (let j = 0; j < group_articles.length; j++) {
                     results.push(group_articles[j] + "\n");
                 }
