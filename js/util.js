@@ -46,19 +46,24 @@ function is_article(article){
     return true;
 }
 
-function download_results(results){
+function download_results(results, pm){
     // Adapted from: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server/18197341#18197341
-    let blob = new Blob(results, {type: 'text/plain'});
+    let option = (pm)?"text/csv":"text/plain";
+    let file_name = (pm)?"patchsort-master.csv":"patch-lists_" + get_date_string() + ".txt";
+
+    let blob = new Blob(results, {type: option});
     if(window.navigator.msSaveOrOpenBlob){
-        window.navigator.msSaveOrOpenBlob(blob, "patch-lists_" + get_date_string() + ".txt");
+        window.navigator.msSaveOrOpenBlob(blob, file_name);
     }else{
         let element = window.document.createElement('a');
         element.href = window.URL.createObjectURL(blob);
-        element.download = "patch-lists_" + get_date_string() + ".txt";
+        element.download = file_name;
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
     }
+
+    location.reload();
 }
 
 function is_responsible(product, platform, master_list, group){
@@ -153,3 +158,28 @@ function get_known_issue(known_issues, article){
     return undefined;
 }
 
+function collect_unassigned_products(patches, master_list){
+    let unassigned_products = [];
+
+    for(let i=0; i<patches.length; i++){
+        if(is_responsible(patches[i].product, undefined, master_list, "UNASSIGNED") &&
+            unassigned_products.indexOf(patches[i].product + "," + patches[i].platform) == -1){
+            //get patches which exist in master list and are unassigned
+            unassigned_products.push(patches[i].product + "," + patches[i].platform);
+        }else if(is_new_product(patches[i].product, master_list) &&
+            unassigned_products.indexOf(patches[i].product + "," + patches[i].platform) == -1){
+            //get patches which do not exist in master list
+            unassigned_products.push(patches[i].product + "," + patches[i].platform);
+        }
+    }
+    return unassigned_products;
+}
+
+function is_new_product(product, master_list){
+    for(let i=0; i<master_list.length; i++){
+        if(master_list[i].product == product){
+            return false;
+        }
+    }
+    return true;
+}

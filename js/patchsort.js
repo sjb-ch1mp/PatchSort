@@ -1,12 +1,15 @@
+let master_list = null;
+let patches = null;
+
 function patchsort(){
 
     //Load all files and lists
-    let master_list = import_master_list();
+    master_list = import_master_list();
     if(master_list == undefined){
         alert("You need to upload the master file!");
         return;
     }
-    let patches = import_security_updates();
+    patches = import_security_updates();
     if(patches == undefined){
         alert("You need to upload the Security Updates CSV file!");
         return;
@@ -18,6 +21,29 @@ function patchsort(){
         return;
     }
     console.log("Files loaded successfully.");
+
+    //check for new products
+    let user_warned_of_new_products = false;
+    let new_products = [];
+    for(let i=0; i<patches.length; i++){
+        if(is_new_product(patches[i].product, master_list)){
+            if(!user_warned_of_new_products){
+                if (confirm("There are new products in this security update! Would you like to launch the PatchMaster Editor?")) {
+                    launch_patchmaster_editor(patches, master_list);
+                    return;
+                }else{
+                    user_warned_of_new_products = true;
+                    new_products.push(patches[i].product);
+                    master_list.push(new rgroup(patches[i].product, "UNASSIGNED"));
+                }
+            }else{
+                if(new_products.indexOf(patches[i].product) == -1){
+                    new_products.push(patches[i].product);
+                    master_list.push(new rgroup(patches[i].product, "UNASSIGNED"));
+                }
+            }
+        }
+    }
 
     //collect patches for each group
     let results = [];
@@ -49,11 +75,11 @@ function patchsort(){
 
                 if(group == "UNASSIGNED") {
                     if(!user_warned_of_unassigned){
-                        if (confirm("There are unassigned products in this patch list! Would you like to continue?")) {
-                            user_warned_of_unassigned = true;
-                        } else {
-                            alert("The sort has been aborted.");
+                        if (confirm("There are unassigned products in the patchmaster file! Would you like to launch the PatchMaster Editor?")) {
+                            launch_patchmaster_editor(patches, master_list);
                             return;
+                        } else {
+                            user_warned_of_unassigned = true;
                         }
                     }
                 }else if(group != "IGNORE"){
@@ -186,5 +212,5 @@ function patchsort(){
     }
 
     //prompt the user to download the sorting results
-    download_results(results);
+    download_results(results, false);
 }

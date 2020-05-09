@@ -15,6 +15,11 @@ div.body{
     padding-right: 25%;
     horiz-align: center;
 }
+div.footnote{
+    padding-left: 5%;
+    padding-right: 25%;
+    horiz-align: center;
+}
 h3.first{
     color:#C11D27;
     font-size: x-large;
@@ -45,7 +50,7 @@ input{
     font-size: small;
     border-color: #f6023f;
 }
-button{
+button.basic{
     background-color: #E06349;
     color: black;
     font-family: Candara;
@@ -53,6 +58,14 @@ button{
     font-weight: bold;
     border-color: #E06349;
     width: 50%;
+}
+button.pm-table{
+    background-color: #E06349;
+    color: black;
+    font-family: Candara;
+    font-size: x-large;
+    font-weight: bold;
+    border-color: #E06349;
 }
 div.help{
     color: white;
@@ -83,4 +96,34 @@ a:link{
 }
 a:visited{
     color: cadetblue;
+}
+td.pm-header{
+    font-family: Candara;
+    font-weight: bold;
+    font-size: medium;
+    color: #C11D27;
+    padding: 5px;
+    border-bottom: 3px solid cadetblue;
+    width: 33%;
+}
+td.pm-data{
+    font-family: Candara;
+    font-size: small;
+    color: white;
+    padding: 5px;
+    border-bottom: 1px solid cadetblue;
+    width: 33%;
+}
+td.pm-data-mid{
+    font-family: Candara;
+    font-size: small;
+    color: white;
+    padding: 5px;
+    border-bottom: 1px solid cadetblue;
+    width: 33%;
+}
+select{
+    font-family: "Courier New";
+    font-size: small;
+    width: 100%;
 }

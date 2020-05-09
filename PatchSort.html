@@ -3,6 +3,7 @@
 <head>
     <title>PatchSort</title>
     <link rel="stylesheet" type="text/css" href="css/patchsort.css"/>
+    <script src="js/edit_patchmaster.js"></script>
     <script src="js/patchsort.js"></script>
     <script src="js/import.js"></script>
     <script src="js/util.js"></script>
@@ -11,7 +12,8 @@
 <!-- PATCHSORT BANNER -->
 <img src="img/patchsort.png" width="100%">
 <!-- DATA -->
-<div class="body">
+<div class="body" id="div-body">
+    <div id="div-mf">
 <p>
     <h3 class="first">> MASTER FILE</h3>
     <div class="help">
@@ -24,6 +26,8 @@
         </tr>
     </table>
 </p>
+    </div>
+    <div id="div-su">
 <p>
     <h3 class="second">> SECURITY UPDATES</h3>
     <div class="help">
@@ -40,6 +44,8 @@
         </tr>
     </table>
 </p>
+    </div>
+    <div id="div-ki">
 <p>
     <h3 class="third">> KNOWN ISSUES</h3>
     <div class="help">
@@ -60,10 +66,13 @@
     <textarea id="known_issues" rows="10"></textarea>
 </p>
 <p>
-    <button onclick="patchsort()">> SORT</button>
+    <button class='basic' onclick="patchsort()">> SORT</button>
 </p>
-<br/>
-<p class="footnote">S J Brookes : <a href="https://github.com/sjb-ch1mp/PatchSort" target="_blank">github.com/sjb-ch1mp/PatchSort</a> : May 2020</p>
+    </div>
 </div>
+    <div class="footnote">
+        <br/>
+        <p class="footnote">S J Brookes : <a href="https://github.com/sjb-ch1mp/PatchSort" target="_blank">github.com/sjb-ch1mp/PatchSort</a> : May 2020</p>
+    </div>
 </body>
 </html>
