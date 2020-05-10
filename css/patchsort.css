@@ -67,6 +67,12 @@ button.pm-table{
     font-weight: bold;
     border-color: #E06349;
 }
+button.add_group{
+    background-color: #E06349;
+    color: black;
+    font-family: Candara;
+    border-color: #E06349;
+}
 div.help{
     color: white;
     font-family: Candara;
@@ -123,11 +129,10 @@ td.pm-data-mid{
     width: 25%;
 }
 td.pm-button{
-    width: 25%;
     padding: 5px;
 }
 select{
     font-family: "Courier New";
     font-size: small;
-    width: 100%;
+    width: 90%;
 }

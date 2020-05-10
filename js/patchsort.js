@@ -183,7 +183,7 @@ function patchsort(){
                     }
                 }
                 if (group_moderate_cve.length > 0) {
-                    results.push("\nModerate::\n\n");
+                    results.push("\nModerate:\n\n");
                     for (let j = 0; j < group_moderate_cve.length; j++) {
                         results.push(group_moderate_cve[j] + "\n");
                     }
