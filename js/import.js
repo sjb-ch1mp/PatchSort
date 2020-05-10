@@ -1,8 +1,24 @@
+/**
+ * The import.js file contains all methods related to importing files
+ * and collecting objects from the files.
+ *
+ * @author: sjb-ch1mp
+ */
+
 let security_updates_file = null;
 let master_file = null;
 
+/**
+ * This method reads in a file loaded by the user and saves it to the global variables 'security_updates_file' or
+ * 'master_file'.
+ *
+ * @param input: The <input> object from PatchSort.html
+ * @param file_type: The type of the file (either "master" or "update").
+ */
 function load_file(input, file_type){
     try{
+
+        //fetch the uploaded file
         let loaded_file = input.files[0];
 
         //check if the user cancelled the file selection
@@ -21,6 +37,8 @@ function load_file(input, file_type){
         if(loaded_file.type != "application/vnd.ms-excel" & loaded_file.type != "text/csv") {
             throw new Error("File type not supported!");
         }else{
+
+            //if so, read in the file and assign it to the applicable variable.
             let reader = new FileReader();
             reader.readAsText(loaded_file);
             reader.onprogress = function(){
@@ -52,14 +70,23 @@ function load_file(input, file_type){
     }
 }
 
+/**
+ * Parse the security_updates_file variable and return an array of patches.
+ *
+ * @returns {null|[]}: the patches from the 'Security Updates.csv' file (patch objects)
+ */
 function import_security_updates(){
+
+    //check the user hasn't forgotten to upload the security updates file
     if(security_updates_file == null){
-        //the user has forgotten to upload the security updates file
         return null;
     }
-    let lines = security_updates_file.split('\n');
-    let security_updates = [];
 
+    //turn the lines into an array
+    let lines = security_updates_file.split('\n');
+
+    //import all patches as patch objects
+    let security_updates = [];
     for(let i=0; i<lines.length; i++){
         //skip the heading line if it exists and blank lines
         if(lines[i] != null && lines[i] != "" && lines[i].indexOf("Date,Product") == -1){
@@ -72,14 +99,24 @@ function import_security_updates(){
     return security_updates;
 }
 
+/**
+ * Parse the text in the known_issues textarea and turn it into an array of known_issue objects.
+ *
+ * @returns {[]|undefined}: an array of known_issue objects
+ */
 function import_known_issues(){
+
+    //check if the user has put anything in the known_issues textarea
     let raw = document.getElementById("known_issues").value;
 	if(raw == undefined || raw == ""){
 		return undefined;
 	}
-    let lines = raw.split('\n');
-    let known_issues = [];
 
+	//turn the text into an array of lines
+    let lines = raw.split('\n');
+
+	//import all known issues as known_issue objects
+    let known_issues = [];
     for(let i=0; i<lines.length; i++){
 
         //skip the heading line if it exists and blank lines
@@ -91,14 +128,23 @@ function import_known_issues(){
     return known_issues;
 }
 
+/**
+ * Parse the patchsort-master.csv file and return an array of rgroup objects
+ *
+ * @returns {null|[]}: an array of rgroup objects
+ */
 function import_master_list(){
+
+    //check if the user has forgotten to upload the master file
     if(master_file == null){
-        //the user has forgotten to upload the master file
         return null;
     }
-    let lines = master_file.split('\n');
-    let master_list = [];
 
+    //turn the file into an array of lines
+    let lines = master_file.split('\n');
+
+    //import the lines as rgroup objects
+    let master_list = [];
     for(let i=0; i<lines.length; i++){
         //skip the heading line
         if(lines[i] != null && lines[i] != "" && lines[i].indexOf("product,group") == -1){
@@ -109,6 +155,11 @@ function import_master_list(){
     return master_list;
 }
 
+/**
+ * Iterate through the master_list array and return a list of unique groups
+ *
+ * @param rgroups: the master_list array (rgroup objects)
+ */
 function collect_groups(rgroups){
     //collate a list of groups
     let group_list = [];
@@ -120,7 +171,11 @@ function collect_groups(rgroups){
     return alphabetize(group_list);
 }
 
-//rgroup = responsible group
+/**
+ * Object for master_list array - contains:
+ * - a product
+ * - the responsible group (rgroup) for that product
+ */
 class rgroup{
     constructor(product, rgroup){
         this.group_name = rgroup;
@@ -128,6 +183,16 @@ class rgroup{
     }
 }
 
+/**
+ * Object for patch array - contains:
+ *  - date of patch
+ *  - product to which patch applies
+ *  - the product family of the product
+ *  - the platform upon which the product runs
+ *  - the associated KB article
+ *  - the severity and impact of the vulnerability being patched
+ *  - the associate CVE
+ */
 class patch{
     constructor(date, product, product_family, platform, article, download, severity, impact, details){
         this.date = date;
@@ -142,6 +207,11 @@ class patch{
     }
 }
 
+/**
+ * Object for known_issues array - contains:
+ *  - a KB article number
+ *  - the product to which it applies
+ */
 class known_issue{
     constructor(kb, product){
         this.kb = kb;

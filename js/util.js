@@ -1,3 +1,16 @@
+/**
+ * The util.js file contains all utility methods, that is, those methods that are helpful methods
+ * used by all other scripts in PatchSort.
+ *
+ * @author: sjb-ch1mp
+ */
+
+/**
+ * Removes confounding commas from a line in a CSV file.
+ *
+ * @param line: the line from the CSV file.
+ * @returns {string|*}: the line without confounding commas.
+ */
 function strip_nested_commas(line){
     if(line.indexOf("\"") != -1){
         let index_first_quote = line.indexOf(",\"");
@@ -8,6 +21,12 @@ function strip_nested_commas(line){
     }
 }
 
+/**
+ * Returns the index of the first space in a line from the Known Issues textarea.
+ *
+ * @param line: the line from the Known Issues textarea.
+ * @returns {number}: the first space in the line (specifically, the first character that isn't a number)
+ */
 function get_first_space(line){
     let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     let i = 0;
@@ -17,6 +36,12 @@ function get_first_space(line){
     return i;
 }
 
+/**
+ * Sorts a list into alphabetical order.
+ *
+ * @param list: a list of strings.
+ * @returns {*}: the list in alphabetical order.
+ */
 function alphabetize(list){
     if(list != undefined && list.length > 1){
         for(let i=0; i<list.length; i++){
@@ -32,6 +57,12 @@ function alphabetize(list){
     return list;
 }
 
+/**
+ * Checks if an article is actually an article, that is, if it is 6 numbers and not a blank string or note.
+ *
+ * @param article: the article number.
+ * @returns {boolean}: true if the article number is actually an article number.
+ */
 function is_article(article){
     if(article == undefined || article == ""){
         return false;
@@ -46,6 +77,12 @@ function is_article(article){
     return true;
 }
 
+/**
+ * Takes a string array and serves it to the user as a CSV or text file.
+ *
+ * @param results: a string array.
+ * @param pm: an indicator for whether a new patchsort-master.csv file or patch-list.txt file is being served.
+ */
 function download_results(results, pm){
     // Adapted from: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server/18197341#18197341
     let option = (pm)?"text/csv":"text/plain";
@@ -66,6 +103,15 @@ function download_results(results, pm){
     location.reload();
 }
 
+/**
+ * Checks whether a given group is responsible for a given patch.
+ *
+ * @param product: the product in question
+ * @param platform: the platform of that product
+ * @param master_list: the list of all products and their responsible group
+ * @param group: the group in question
+ * @returns {boolean}: true if the group in question is responsible for the product in question
+ */
 function is_responsible(product, platform, master_list, group){
 
     //if the platform exists - this means that
@@ -88,6 +134,12 @@ function is_responsible(product, platform, master_list, group){
     return false;
 }
 
+/**
+ * Calculates the date of the latest Patch Tuesday. This method accounts for the fact
+ * that Patch Tuesday occurs on the SECOND TUESDAY of a given month.
+ *
+ * @returns {string}: the date of the current security update (<YEAR>-<Mon>)
+ */
 function get_date_string(){
     let d = new Date();
     let y = d.getFullYear();
@@ -115,10 +167,21 @@ function get_date_string(){
     return y + "-" + m;
 }
 
+/**
+ * Returns the URL for the release notes of the latest security update.
+ *
+ * @returns {string}: the URL of the release notes for the latest security update.
+ */
 function get_release_notes_url(){
     return "https://portal.msrc.microsoft.com/en-us/security-guidance/releasenotedetail/" + get_date_string();
 }
 
+/**
+ * Translates a month integer into an abbreviated month string.
+ *
+ * @param m: the month as an integer (0-11)
+ * @returns {string}: the month as a string (Jan-Dec)
+ */
 function get_month_abbreviation(m){
     
     switch(m){
@@ -149,6 +212,13 @@ function get_month_abbreviation(m){
     }
 }
 
+/**
+ * Fetches the known issue string for a given article.
+ *
+ * @param known_issues: an array of known_issue objects
+ * @param article: the article in question.
+ * @returns {string|undefined}: the known issue string (<KB article number>: <Product>)
+ */
 function get_known_issue(known_issues, article){
     for(let i=0; i<known_issues.length; i++){
         if(known_issues[i].kb == article){
@@ -158,6 +228,13 @@ function get_known_issue(known_issues, article){
     return undefined;
 }
 
+/**
+ * Collects all new products and products that are currently unassigned in the master-list.
+ *
+ * @param patches: array of patch objects
+ * @param master_list: array of rgroup objects
+ * @returns {[]}: list of products that are unassigned.
+ */
 function collect_unassigned_products(patches, master_list){
     let unassigned_products = [];
 
@@ -180,6 +257,13 @@ function collect_unassigned_products(patches, master_list){
     return unassigned_products;
 }
 
+/**
+ * Checks whether a product exists in the master_list
+ *
+ * @param product: the product in question
+ * @param master_list: an array of rgroup objects
+ * @returns {boolean}: true if the product exists in the master_list
+ */
 function is_new_product(product, master_list){
     for(let i=0; i<master_list.length; i++){
         if(master_list[i].product == product){

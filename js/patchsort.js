@@ -1,6 +1,19 @@
+/**
+ * The patchsort.js file contains the main patchsort() function.
+ *
+ * @author: sjb-ch1mp
+ */
+
 let master_list = null;
 let patches = null;
 
+/**
+ * The patchsort() function imports the patchsort-master.csv file, the latest Microsoft Security Updates list (as a CSV
+ * file), and a list of KB articles related to the update. It then sorts the patches according to which groups are
+ * responsible for them, formats the lists and serves the resulting file to the user.
+ *
+ * This is the main method of patchsort.
+ */
 function patchsort(){
 
     //Load all files and lists
