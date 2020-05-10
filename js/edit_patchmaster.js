@@ -31,7 +31,8 @@ function load_patchmaster_table(patches, master_list){
         patchmaster_table += "<td class='pm-data-mid'>" + platform + "</td><td>" + combo_box.replace("replace_me", "cb_" + i);
     }
     patchmaster_table += "</table>\n";
-    patchmaster_table += "<br/><button class='pm-table' onclick='create_new_master()'>> DONE</button>\n";
+    patchmaster_table += "<br/><table><tr><td class='pm-button'><button class='pm-table' onclick='create_new_master()'>> SAVE</button></td>"
+    patchmaster_table += "<td class='pm-button'><button class='pm-table' onclick='location.reload()'>> CANCEL</button></td></tr>\n";
 
     //add table to page
     document.getElementById("div-body").innerHTML = patchmaster_table;

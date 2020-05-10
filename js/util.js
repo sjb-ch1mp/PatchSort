@@ -161,18 +161,37 @@ function get_known_issue(known_issues, article){
 function collect_unassigned_products(patches, master_list){
     let unassigned_products = [];
 
+    //collect unassigned products from patch list
     for(let i=0; i<patches.length; i++){
         if(is_responsible(patches[i].product, undefined, master_list, "UNASSIGNED") &&
             unassigned_products.indexOf(patches[i].product + "," + patches[i].platform) == -1){
             //get patches which exist in master list and are unassigned
             unassigned_products.push(patches[i].product + "," + patches[i].platform);
-        }else if(is_new_product(patches[i].product, master_list) &&
+        }/*else if(is_new_product(patches[i].product, master_list) &&
             unassigned_products.indexOf(patches[i].product + "," + patches[i].platform) == -1){
             //get patches which do not exist in master list
             unassigned_products.push(patches[i].product + "," + patches[i].platform);
+        }*/
+    }
+
+    //collect unassigned products from master_list
+    for(let i=0; i<master_list.length; i++){
+        if(master_list[i].group_name == "UNASSIGNED" && !
+            in_unassigned_products_no_platform(unassigned_products, master_list[i].product)){ //FIXME: only searching for products with no platform here
+            unassigned_products.push(master_list[i].product + ",");
         }
     }
+
     return unassigned_products;
+}
+
+function in_unassigned_products_no_platform(unassigned_products, product){
+    for(let i=0; i<unassigned_products.length; i++){
+        if(unassigned_products[i].split(",")[0] == product){
+            return true;
+        }
+    }
+    return false;
 }
 
 function is_new_product(product, master_list){

@@ -22,26 +22,34 @@ function patchsort(){
     }
     console.log("Files loaded successfully.");
 
+    //check for unassigned products in the patchmaster file
+    let num_unassigned = 0;
+    for(let i=0; i<master_list.length; i++){
+        if(master_list[i].group_name == "UNASSIGNED"){
+            num_unassigned++;
+        }
+    }
+    if(num_unassigned > 0){
+        if(confirm("There are " + num_unassigned + " unassigned products in the patchmaster file! Would you like to launch the PatchMaster Editor?")){
+            launch_patchmaster_editor(patches, master_list);
+            return;
+        }
+    }
+
     //check for new products
-    let user_warned_of_new_products = false;
     let new_products = [];
     for(let i=0; i<patches.length; i++){
         if(is_new_product(patches[i].product, master_list)){
-            if(!user_warned_of_new_products){
-                if (confirm("There are new products in this security update! Would you like to launch the PatchMaster Editor?")) {
-                    launch_patchmaster_editor(patches, master_list);
-                    return;
-                }else{
-                    user_warned_of_new_products = true;
-                    new_products.push(patches[i].product);
-                    master_list.push(new rgroup(patches[i].product, "UNASSIGNED"));
-                }
-            }else{
-                if(new_products.indexOf(patches[i].product) == -1){
-                    new_products.push(patches[i].product);
-                    master_list.push(new rgroup(patches[i].product, "UNASSIGNED"));
-                }
+            if(new_products.indexOf(patches[i].product) == -1){
+                new_products.push(patches[i].product);
+                master_list.push(new rgroup(patches[i].product, "UNASSIGNED"));
             }
+        }
+    }
+    if(new_products.length > 0){
+        if (confirm("There are " + new_products.length + " new products in this security update! Would you like to launch the PatchMaster Editor?")) {
+            launch_patchmaster_editor(patches, master_list);
+            return;
         }
     }
 
@@ -52,7 +60,6 @@ function patchsort(){
     results.push("DATE: " + get_date_string() + "\n");
     results.push("======================\n");
     let group_list = collect_groups(master_list);
-    let user_warned_of_unassigned = false;
     for(let i=0; i<group_list.length; i++) {
 
         let group = group_list[i];
@@ -69,20 +76,23 @@ function patchsort(){
         for(let j=0; j<patches.length; j++){
             if(is_responsible(patches[j].product, patches[j].platform, master_list, group)){
 
-                if(group_products.indexOf(patches[j].product) == -1){
-                    group_products.push(patches[j].product);
-                }
-
-                if(group == "UNASSIGNED") {
-                    if(!user_warned_of_unassigned){
-                        if (confirm("There are unassigned products in the patchmaster file! Would you like to launch the PatchMaster Editor?")) {
-                            launch_patchmaster_editor(patches, master_list);
-                            return;
-                        } else {
-                            user_warned_of_unassigned = true;
+                if(group == "IGNORE" || group == "UNASSIGNED"){
+                    if(patches[j].platform != ""){
+                        if(group_products.indexOf(patches[j].product + " (" + patches[j].platform + ")") == -1){
+                            group_products.push(patches[j].product + " (" + patches[j].platform + ")");
+                        }
+                    }else{
+                        if(group_products.indexOf(patches[j].product) == -1){
+                            group_products.push(patches[j].product);    
                         }
                     }
-                }else if(group != "IGNORE"){
+                }else{
+                    if(group_products.indexOf(patches[j].product) == -1){
+                        group_products.push(patches[j].product);    
+                    }
+                }
+
+                if(group != "IGNORE" && group != "UNASSIGNED"){
                     switch(patches[j].severity){
                         case "Critical":
                             if(group_critical_cve.indexOf(patches[j].details) == -1){
