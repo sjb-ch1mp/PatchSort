@@ -218,7 +218,7 @@ function patchsort(){
                 }
             }
 
-            if (no_known_issues) {
+            if (no_known_issues || group_known_issues.length == 0) {
                 results.push("\nNo known issues.\n\n");
             } else {
                 results.push("\nKnown Issues Apply To:\n\n");
